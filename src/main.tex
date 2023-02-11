@@ -1,0 +1,97 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[left=1.25cm,right=1.25cm,top=1.25cm,bottom=1.5cm]{geometry}
+
+% \usepackage{showframe}
+
+\usepackage{etoolbox}
+\usepackage[chorded]{songs}
+\MultiwordChords
+\noversenumbers
+
+\baselineadj=0pt plus 0pt minus 0pt
+\renewcommand{\clineparams}{
+  \baselineskip=12pt
+  \lineskiplimit=12pt
+  \lineskip=0pt
+}
+\columnsep=12pt
+
+\renewcommand{\snumbgcolor}{black}
+\renewcommand{\printsongnum}[1]{
+    \sffamily \bfseries \LARGE \color{white}#1
+}
+
+% \renewcommand{\colbotglue}{0pt plus .5\textheight minus 0pt}
+
+
+\setlength{\cbarwidth}{0.5pt}
+
+\measuresoff
+% \indexeson
+\indexesoff
+
+\newcommand\toctitle{}
+\newcommand\toclink{}
+{\makeatletter\gdef\toclink{\@ifundefined{href}{}{{song\theSB@songsnum-\thesongnum
+                                                   .\ifnum\value{section}=0 1\else2\fi}}}}
+\newcommand\addtotoc[1]{\addtocontents{toc}{\protect\contentsline
+  {\ifnum\value{section}>0sub\fi section}{\numberline\thesongnum#1}{\thepage}{\toclink}}}
+\newsongkey{toc}
+  {\def\toctitle{\resettitles\addtotoc{\songauthors~-~\songtitle}}}
+  {\def\toctitle{\addtotoc{#1}}}
+\renewcommand\extendprelude{\showrefs\showauthors\toctitle}
+
+\renewcommand{\lyricfont}{\sffamily\small}
+
+\ccpenalty=1000
+\vvpenalty=1000
+\ccpenalty=1000
+\vcpenalty=1000
+\cvpenalty=1000
+\brkpenalty=1000
+\interlinepenalty=1000
+\spenalty=10000
+
+\renewcommand{\stitlefont}{\Large}
+\renewcommand{\printchord}[1]{\bf\sffamily#1}
+\patchcmd{\showauthors}{\bfseries}{\normalsize}{}{}
+\songcolumns{3}
+\setlength{\songnumwidth}{1cm}
+
+\afterpreludeskip=-10pt 
+\beforepostludeskip=0pt 
+
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{\vspace{-0.75cm}\date{\today}}
+\cfoot{\vspace{-0.75cm}\thepage\ / \pageref{LastPage}}
+\rfoot{\vspace{-0.75cm}Peterpaul's songbook}
+
+\begin{document}
+\versesep=\baselineskip
+
+
+\title{Peterpaul's songbook}
+\author{Peter Paulovics}
+\date{\today}
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\songsection{English Songs}
+
+\begin{songs}{}
+
+\input{songs.tex}
+
+\end{songs}
+
+
+
+\end{document}

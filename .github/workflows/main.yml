@@ -13,7 +13,10 @@ jobs:
 
     - name: Generate PDF
       run: |
-        docker build -t peterpaul/songbook . && docker run -v $(pwd)/src:/songbook/src -v $(pwd)/out:/songbook/out  peterpaul/songbook
+       sha1sum out/main.pdf > main.sha1
+       docker build -t peterpaul/songbook . && docker run -v $(pwd)/src:/songbook/src -v $(pwd)/out:/songbook/out  peterpaul/songbook 
+       sha1sum out/main.pdf > main.sha1
+       sha1sum -c main.sha1
 
     - name: Deploy PDF to Artifactory
       id: deploy_pdf

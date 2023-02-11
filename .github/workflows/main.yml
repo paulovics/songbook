@@ -20,4 +20,4 @@ jobs:
 
     - name: Deploy PDF to Artifactory
       run: |
-        curl -u$JFROG_EMAIL:${{ secrets.JFROG_API_KEY }} -T out/main.pdf "https://peterpaul.jfrog.io/artifactory/songbook/${{ github.sha }}"
+        curl -u$JFROG_EMAIL:${{ secrets.JFROG_API_KEY }} -T out/main.pdf "https://peterpaul.jfrog.io/artifactory/songbook/main-${{ github.sha }}.pdf"

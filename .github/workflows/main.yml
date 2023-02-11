@@ -1,0 +1,39 @@
+name: Generate PDF and Deploy
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker://docker:19.03.13
+
+    - name: Generate PDF
+      run: |
+        docker build -t peterpaul/songbook . && docker run -v $(pwd)/src:/songbook/src -v $(pwd)/out:/songbook/out  peterpaul/songbook
+
+    - name: Deploy PDF to Artifactory
+      id: deploy_pdf
+      uses: actions/upload-artifact@v2
+      with:
+        name: pdf-file
+        path: out/main.pdf
+
+    - name: Update README with PDF link
+      uses: anothr/update-readme-action@v1
+      with:
+        file-path: README.md
+        update-type: add
+        section-title: PDF
+        section-body: |
+          [Download the PDF](${{ steps.deploy_pdf.outputs.url }}/pdf-file)
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}

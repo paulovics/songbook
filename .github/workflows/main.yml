@@ -21,14 +21,11 @@ jobs:
       with:
         name: pdf-file
         path: out/main.pdf
-
-    - name: Update README with PDF link
-      uses: anothr/update-readme-action@v1
-      with:
-        file-path: README.md
-        update-type: add
-        section-title: PDF
-        section-body: |
-          [Download the PDF](${{ steps.deploy_pdf.outputs.url }}/pdf-file)
+        
+    - name: Update GitHub Profile README
+      uses: theboi/github-update-readme@v1.0
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
+      with:
+        subhead: "[Download the PDF](${{ steps.deploy_pdf.outputs.url }}/pdf-file)"
+        

@@ -1,4 +1,4 @@
-FROM aergus/latex:2022-11-24
+FROM dockershelf/latex:basic-stable
 
 WORKDIR /songbook
 
@@ -7,4 +7,4 @@ VOLUME out
 
 RUN mkdir temp/
 
-CMD  cp -r src/* temp/ && cd temp && latex main.tex && latex main.tex && cp main.pdf ../out/
+CMD  cp -r src/* temp/ && cd temp && latex main.tex && latex --output-format=pdf main.tex && cp main.pdf ../out/

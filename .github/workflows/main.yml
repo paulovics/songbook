@@ -1,0 +1,27 @@
+name: Generate PDF and Deploy
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker://docker:19.03.13
+
+    - name: Generate PDF
+      run: |
+       sha1sum out/main.pdf > main.sha1
+       docker build -t peterpaul/songbook . && docker run -v $(pwd)/src:/songbook/src -v $(pwd)/out:/songbook/out  peterpaul/songbook 
+       sha1sum out/main.pdf > main.sha1
+       sha1sum -c main.sha1
+
+    - name: Deploy PDF to Artifactory
+      id: deploy_pdf
+      uses: actions/upload-artifact@v2
+      with:
+        name: pdf-file
+        path: out/main.pdf
+        

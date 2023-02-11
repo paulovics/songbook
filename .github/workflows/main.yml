@@ -1,10 +1,5 @@
 name: Generate PDF and Deploy
-
-on:
-  push:
-    branches:
-      - '*'
-
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest

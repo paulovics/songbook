@@ -19,9 +19,5 @@ jobs:
        sha1sum -c main.sha1
 
     - name: Deploy PDF to Artifactory
-      id: deploy_pdf
-      uses: actions/upload-artifact@v2
-      with:
-        name: pdf-file
-        path: out/main.pdf
-        
+      run: |
+        curl -u$JFROG_EMAIL:${{ secrets.JFROG_API_KEY }} -T out/main.pdf "https://peterpaul.jfrog.io/artifactory/songbook/main-${{ github.sha }}.pdf"
